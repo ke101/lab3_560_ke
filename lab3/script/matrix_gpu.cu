@@ -3,7 +3,7 @@
 #include <time.h>
 #include <cuda_runtime.h>
 
-__global__ void matrixMultiplyGPU(float *A, float *B, float *C, int N) { 
+__global__ void m_m_muplty_GPU(float *A, float *B, float *C, int N) { 
     int row = blockIdx.y * blockDim.y + threadIdx.y; 
     int col = blockIdx.x * blockDim.x + threadIdx.x; 
     if (row < N && col < N) { 
@@ -17,11 +17,7 @@ __global__ void matrixMultiplyGPU(float *A, float *B, float *C, int N) {
 
 int main(int argc, char **argv) {
     int N = (argc > 1) ? atoi(argv[1]) : 1024; 
-    printf("Matrix Size: %d x %d\n", N, N);
-
     size_t bytes = N * N * sizeof(float);
-
-
     float *h_A = (float *)malloc(bytes);
     float *h_B = (float *)malloc(bytes);
     float *h_C = (float *)malloc(bytes); 
@@ -46,7 +42,7 @@ int main(int argc, char **argv) {
     printf("Launching Kernel...\n");
     clock_t start = clock();
 
-    matrixMultiplyGPU<<<numBlocks, threadsPerBlock>>>(d_A, d_B, d_C, N);
+    m_m_muplty<<<nB, tB>>>(d_A, d_B, d_C, N);
 
 
     cudaDeviceSynchronize();
@@ -56,8 +52,6 @@ int main(int argc, char **argv) {
     printf("GPU execution time: %f seconds\n", elapsed);
 
     cudaMemcpy(h_C, d_C, bytes, cudaMemcpyDeviceToHost);
-
-    printf("Value at C[0]: %f\n", h_C[0]);
 
     free(h_A); free(h_B); free(h_C);
     cudaFree(d_A); cudaFree(d_B); cudaFree(d_C);
