@@ -20,4 +20,4 @@ print(final_csv)
 
 speedup = sum(type['normal']) / sum(type['tiled'])
 
-print('speedup gained by tiling optimization vs. naïve CUDA:', speedup)
+
