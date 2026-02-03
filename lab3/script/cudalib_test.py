@@ -17,4 +17,5 @@ start = time.time()
 lib.gpu_matrix_multiply(A.ravel(), B.ravel(), C.ravel(), N) 
 end = time.time() 
 
-print(f"Python call to CUDA library completed in {end - start:.4f} seconds") 
+print(f"time: {end-before}") 
+
