@@ -25,7 +25,6 @@ __global__ void matrixMultiplyTiled(float *A, float *B, float *C, int N) {
  if (Row < N && Col < N) 
  C[Row * N + Col] = Pvalue; 
 } 
-// Exposed C function for Python 
 extern "C" void gpu_matrix_multiply(float *h_A, float *h_B, float *h_C, int 
 N) { 
  size_t size = N * N * sizeof(float); 
@@ -42,4 +41,5 @@ TILE_WIDTH);
  cudaDeviceSynchronize(); 
  cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost); 
  cudaFree(d_A); cudaFree(d_B); cudaFree(d_C); 
+
 }
