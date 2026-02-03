@@ -31,5 +31,6 @@ if results:
  
     plt.show()
 else:
-    print("No results to plot!")
+    print("no results")
+
 
